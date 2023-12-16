@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getorder } from "../services/ApiService"
+import { deleteorder, getorder } from "../services/ApiService"
 import AddOrder from "./AddOrder"
 
 const OrderList = () => {
@@ -15,6 +15,11 @@ const OrderList = () => {
                 return() => mount = false
             })
     }, [])
+
+    const handleDeleteBtn = (id) => {
+        deleteorder(id)
+            .then(() => setOrders(orders.filter(p => p.order_id !== id)))
+    }
 
     const handleCancelBtn = () => {
         setShowAddOrder(false);
@@ -44,15 +49,15 @@ const OrderList = () => {
                             <td>{order.last_name}</td>
                             <td>{order.order_type}</td>
                             <td>
-                                <button className="btn btn-primary m-2" onClick={()=>{}}>Edit</button>
-                                <button className="btn btn-danger" onClick={()=>{}}>Cancel</button>
+                                {/* <button className="btn btn-primary m-2" onClick={()=>{}}>Edit</button> */}
+                                <button className="btn btn-danger" onClick={() => handleCancelBtn(order.order_id)}>Cancel</button>
                             </td>
                         </tr>
                     )}
                 </tbody>
            </table>
            <br />
-           <button className="btn btn-success" onClick={()=>setShowAddOrder(true)}>Create New Order</button>
+           <button className="btn btn-success" onClick={()=>setShowAddOrder(!showAddOrder)}>Create New Order</button>
            <br />
            <br />
            {showAddOrder && <AddOrder handleCancelBtn={handleCancelBtn} />}
