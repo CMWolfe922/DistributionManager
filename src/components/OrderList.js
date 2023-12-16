@@ -36,10 +36,11 @@ const OrderList = () => {
             <table className="table table-striped table-hover table-bordered">
                 <thead className="table-dark">
                     <tr>
-                        <th scope="col">Order ID</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Order Type</th>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Order Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,9 +49,10 @@ const OrderList = () => {
                             <td>{order.first_name}</td>
                             <td>{order.last_name}</td>
                             <td>{order.order_type}</td>
+                            <td>{order.order_id}</td>
                             <td>
                                 {/* <button className="btn btn-primary m-2" onClick={()=>{}}>Edit</button> */}
-                                <button className="btn btn-danger" onClick={() => handleCancelBtn(order.order_id)}>Cancel</button>
+                                <button className="btn btn-danger" onClick={() => handleDeleteBtn(order.order_id)}>Delete</button>
                             </td>
                         </tr>
                     )}
