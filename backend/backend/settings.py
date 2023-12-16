@@ -31,6 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Added all these apps to the settings file.
+    'rest_framework',
+    'api_manager',
+    'corsheaders',
+    'bootstrap5',
+    'crispy_forms',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# Added this for the corsheaders package
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
+    # Added this middleware for the corsheaders package
+    'corsheaders.middleware.CorsMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Chicago'
 
 USE_I18N = True
 
