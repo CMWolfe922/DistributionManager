@@ -48,8 +48,8 @@ class Contact(models.Model):
     contact_id = models.BigAutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    work_number = models.BigIntegerField(max_length=20)
-    mobile_number = models.BigIntegerField(max_length=20)
+    work_number = models.BigIntegerField(null=True)
+    mobile_number = models.BigIntegerField(null=True)
     email = models.EmailField()
 
 class Pickup(models.Model):
