@@ -25,6 +25,22 @@ class Customer(models.Model):
     customer_id = models.BigAutoField(primary_key=True)
     customer_name = models.CharField(max_length=100, unique=True)
     customer_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+
+class Driver(models.Model):
+    driver_id = models.BigAutoField(primary_key=True)
+    driver_name = models.CharField(max_length=100)
+    driver_email = models.EmailField()
+    driver_paperwork = models.FileField(upload_to='uploads/<driver_name>/<driver_id>/files/', null=True)
+    driver_created = models.DateTimeField(auto_now_add=True)
+    dba = models.CharField(null=True, max_length=100)
+    driver_start_date = models.DateField(null=True)
+    driver_inactive = models.BooleanField(null=True)
+    driver_inactive_date = models.DateField(null=True)
+    vehicle_type = models.CharField(max_length=25)
+    vehicle_make = models.CharField(max_length=25)
+    vehicle_model = models.CharField(max_length=25)
+    vehicle_year = models.DateField()
+    vehicle_color = models.CharField(max_length=25)
     
 class Contact(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -70,4 +86,6 @@ class Order(models.Model):
     order_complete = models.BooleanField(null=True)
     time_open = models.TimeField(null=True)
     time_to_complete = models.DateTimeField(null=True)
+    rate = models.DecimalField(null=True, max_digits=10, decimal_places=3)
+    
     
