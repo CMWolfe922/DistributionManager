@@ -8,6 +8,7 @@ import zoneinfo
 # Cryptographic signer for securing data
 signer = TimestampSigner()
 
+
 # Create your models here.
 class Location(models.Model):
     location_id = models.BigAutoField(primary_key=True)
@@ -19,18 +20,24 @@ class Location(models.Model):
     country_code = models.CharField(max_length=50)
     onsite_instructions = models.CharField(max_length=255)
     location_details = models.CharField(max_length=255)
-    
+
+
 class Customer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     customer_id = models.BigAutoField(primary_key=True)
     customer_name = models.CharField(max_length=100, unique=True)
-    customer_location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+    customer_location = models.ForeignKey(
+        Location, on_delete=models.SET_NULL, null=True
+    )
+
 
 class Driver(models.Model):
     driver_id = models.BigAutoField(primary_key=True)
     driver_name = models.CharField(max_length=100)
     driver_email = models.EmailField()
-    driver_paperwork = models.FileField(upload_to='uploads/<driver_name>/<driver_id>/files/', null=True)
+    driver_paperwork = models.FileField(
+        upload_to="uploads/<driver_name>/<driver_id>/files/", null=True
+    )
     driver_created = models.DateTimeField(auto_now_add=True)
     dba = models.CharField(null=True, max_length=100)
     driver_start_date = models.DateField(null=True)
@@ -41,16 +48,20 @@ class Driver(models.Model):
     vehicle_model = models.CharField(max_length=25)
     vehicle_year = models.DateField()
     vehicle_color = models.CharField(max_length=25)
-    
+
+
 class Contact(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    customer = models.ForeignKey(Customer, related_name='contacts', on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, related_name="contacts", on_delete=models.CASCADE
+    )
     contact_id = models.BigAutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     work_number = models.BigIntegerField(null=True)
     mobile_number = models.BigIntegerField(null=True)
     email = models.EmailField()
+
 
 class Pickup(models.Model):
     pickup_id = models.BigAutoField(primary_key=True)
@@ -59,6 +70,7 @@ class Pickup(models.Model):
     pu_arrival_time = models.DateTimeField()
     pu_depart_time = models.DateTimeField()
 
+
 class Delivery(models.Model):
     delivery_id = models.BigAutoField(primary_key=True)
     del_contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, null=True)
@@ -66,16 +78,17 @@ class Delivery(models.Model):
     del_arrival_time = models.DateTimeField()
     del_depart_time = models.DateTimeField()
 
+
 class Order(models.Model):
     TYPE_CHOICES = [
-        ('SCHD', "Scheduled"),
-        ('CASH', "Cash Customer"),
-        ('DIST', "Distribution"),
-        ('HTSHOT', "Hot Shot"),
-        ('STAT', "Rush Stat"),
-        ('ONEHR', "One Hour"),
-        ('THRHR', "Three Hour"),
-        ('SAMDAY', "Same Day"),
+        ("SCHD", "Scheduled"),
+        ("CASH", "Cash Customer"),
+        ("DIST", "Distribution"),
+        ("HTSHOT", "Hot Shot"),
+        ("STAT", "Rush Stat"),
+        ("ONEHR", "One Hour"),
+        ("THRHR", "Three Hour"),
+        ("SAMDAY", "Same Day"),
     ]
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     order_pu = models.ForeignKey(Pickup, on_delete=models.SET_NULL, null=True)
@@ -87,5 +100,3 @@ class Order(models.Model):
     time_open = models.TimeField(null=True)
     time_to_complete = models.DateTimeField(null=True)
     rate = models.DecimalField(null=True, max_digits=10, decimal_places=3)
-    
-    
